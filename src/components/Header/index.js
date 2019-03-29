@@ -28,7 +28,7 @@ class Header extends Component{
                 </Col>
                 <Col span={18}>
                     <div style={{float:'right',fontSize:16}}>
-                        <Icon type="smile" />欢饮{this.state.userName}
+                        <Icon type="smile" />欢迎&nbsp&nbsp{this.state.userName}
                         <a onClick={this.logout}><Icon type="logout" />退出</a>
                     </div>
                 </Col>

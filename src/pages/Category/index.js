@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { Row,Icon,Col, Menu,Table,Modal,Popconfirm,Button,Input, message,Form} from 'antd';
+import { Row,Col,Table,Modal,Popconfirm,Button,Input, message,Form} from 'antd';
 import categoryServer from "../../server/category";
 export default class Category extends Component{
     state ={
@@ -31,10 +31,8 @@ export default class Category extends Component{
     }
     getList = () => {
         categoryServer.list({current:this.state.pagination.current,keyword:this.state.keyword}).then(res=>{
-           if(res.code == 1){
+            if(res.code == 1){
                 let {items,pageNum:current,pageSize,total} = res.data;
-                // let current = pageNum;
-                // debugger
                 this.setState({
                     items:res.data.items.map(item=>(item.key = item._id,item)),
                     pagination:{

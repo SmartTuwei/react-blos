@@ -6,11 +6,13 @@
     "antd": "^3.15.1",
     "axios": "^0.18.0",
     "less": "^3.9.0",
+    "moment": "^2.24.0",
     "react": "^16.8.4",
     "react-app-rewired": "^2.1.1",
     "react-dom": "^16.8.4",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "typescript": "^3.3.4000"
   },
   "scripts": {
     "start": "react-app-rewired start",
