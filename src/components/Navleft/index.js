@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
-import { Row,Icon,Col, Menu,link } from 'antd';
-import user from "../../server/user";
+import { Icon, Menu, } from 'antd';
 import {withRouter,Link} from "react-router-dom";
 
 class Navleft extends Component{

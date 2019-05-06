@@ -21,7 +21,7 @@ class Home extends Component{
     handleSubmit = (isSignUp,user)=>{
         // var thar = this;
         server[isSignUp?'signup':'signin'](user).then(res=>{
-            if(res.code == 1){
+            if(res.code === 1){
                 if(!isSignUp){
                     sessionStorage.setItem("username",res.data.user.userName);
                     this.props.history.push("/admin");

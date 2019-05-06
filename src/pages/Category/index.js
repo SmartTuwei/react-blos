@@ -31,10 +31,10 @@ export default class Category extends Component{
     }
     getList = () => {
         categoryServer.list({current:this.state.pagination.current,keyword:this.state.keyword}).then(res=>{
-            if(res.code == 1){
-                let {items,pageNum:current,pageSize,total} = res.data;
+            if(res.code === 1){
+                let {pageNum:current,pageSize,total} = res.data;
                 this.setState({
-                    items:res.data.items.map(item=>(item.key = item._id,item)),
+                    items:res.data.items.map(item =>(item.key = item._id,item)),
                     pagination:{
                         current,
                         pageSize,
@@ -59,7 +59,7 @@ export default class Category extends Component{
     editOk =()=>{
        let category = this.editform.props.form.getFieldsValue();
        categoryServer[this.state.isCreate?'create':'updata'](category).then(res=>{
-           if(res.code == 1){
+           if(res.code === 1){
                this.setState({editVisible:false});
                 this.getList();
            }else{
@@ -73,7 +73,7 @@ export default class Category extends Component{
     }
     remove = (id)=>{
         categoryServer.remove(id).then(res=>{
-            if(res.code == 1){
+            if(res.code === 1){
                 this.setState({
                     pagination:{
                         ...this.state.pagination,current:1

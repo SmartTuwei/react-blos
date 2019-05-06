@@ -7,7 +7,7 @@ const createHistory = require("history").createHashHistory;
 let history = createHistory();
 //每当路由变化的时候，都会执行这个监听函数
 history.listen(loc=>{
-    if(loc.pathname == "/admin" && !sessionStorage.getItem('username')){
+    if(loc.pathname === "/admin" && !sessionStorage.getItem('username')){
         history.push("/");
     }
 })

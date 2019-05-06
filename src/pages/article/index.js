@@ -21,7 +21,7 @@ export default class Article extends Component{
     componentDidMount(){//指挥执行一次不用willmount
         this.getList();
         categoryServer.list({current:1,pageSize:10}).then(res=>{
-            if(res.code == 1){
+            if(res.code === 1){
                 this.setState({categories:res.data.items})
             }
         })
@@ -30,7 +30,7 @@ export default class Article extends Component{
         this.setState({loading:true});
         articlesServer.list({current:this.state.pagination.current,keyword:this.state.keyword}).then(res=>{
             this.setState({loading:false});
-            if(res.code == 1){
+            if(res.code === 1){
                 const { items,pageNum:current,pageSize,total} = res.data;
                 this.setState({
                     items:items.map(item=>(item.key = item._id,item)),
@@ -62,7 +62,7 @@ export default class Article extends Component{
     editOk=()=>{
         let article = this.editform.props.form.getFieldsValue();
         articlesServer[this.state.isCreate ? "create":"update"](article).then(res=>{
-            if(res.code == 1){
+            if(res.code === 1){
                 this.setState({editVisible:false},this.getList)
             }
         })
@@ -73,7 +73,7 @@ export default class Article extends Component{
     }
     view=(item)=>{
         articlesServer.addPV(item._id).then(res=>{
-            if(res.code == 1){
+            if(res.code === 1){
                 this.setState({viewVisible:true,item,title:"查看文章"},this.getList)
             }else{
                 message.error(res.data);
@@ -87,7 +87,7 @@ export default class Article extends Component{
     //删除文章
     remove =(ids)=>{
         articlesServer.remove(ids).then(res=>{
-            if(res.code == 1){
+            if(res.code === 1){
                 this.setState(
                     {},this.getList
                 )
@@ -140,20 +140,36 @@ export default class Article extends Component{
                 dataIndex:'title',
                 key:'title'
             },{
-                title:'内容',
-                dataIndex:'content',
-                key:'content'
-            },{
                 title:'分类',
                 dataIndex:'category',
+                width:200,
                 key:'category',
                 render:(text) =>{
                     if(text){
-                        return text.name || '无'    
+                        var str = text.name.substr(0,8);
+                        if(text.length>8){
+                           str+="......"      
+                        }
+                        return str || '无'    
                     // return text.name // text本来是一个字符串，populate之后text就是一个分类对象
                     }
                 }
             },{
+                title:'内容',
+                dataIndex:'content',
+                key:'content',
+                width:200,
+                render:(text) =>{
+                    if(text){
+                        var str = text.substr(0,10);
+                        if(text.length>10){
+                           str+="......"      
+                        }
+                        return str;
+                    }
+                }
+            },
+            {
                 title:'阅读量',
                 dataIndex:'pv',
                 key:'pv',
@@ -296,6 +312,7 @@ export default class Article extends Component{
 class EditModal extends Component {
     render(){
         const {getFieldDecorator} = this.props.form;
+        const { TextArea } = Input;
         return(
             <Form>
                 <Form.Item>
@@ -331,7 +348,7 @@ class EditModal extends Component {
                            initialValue:this.props.isCreate?'':this.props.item.content,
                            rules:[{required:true,message:'请输入内容'}]
                        })(
-                           <Input placeholder="请输入内容" />
+                           <TextArea placeholder="请输入内容" autosize={{ minRows: 2, maxRows: 8 }} />
                        ) 
                     }
                 </Form.Item>

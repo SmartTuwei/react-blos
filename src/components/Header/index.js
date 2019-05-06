@@ -18,7 +18,6 @@ class Header extends Component{
                 this.props.history.push("/");
             }
         })
-        let userName = sessionStorage.getItem("username");
     }   
     render(){
         return(
