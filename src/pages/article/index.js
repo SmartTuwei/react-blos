@@ -40,7 +40,7 @@ export default class Article extends Component{
                         pageSize,
                         showTotal:(total)=>`总计${total}条`,
                         showQuickJumper:true,
-                        onChange:this.pageChange// 方法名是onChangge    
+                        onChange:this.pageChange// 方法名是onChangge
                     }
                 })
             }
@@ -50,7 +50,7 @@ export default class Article extends Component{
     pageChange=(current)=>{
         console.log(current);
         this.setState({
-           pagination:{...this.state.pagination,current} 
+           pagination:{...this.state.pagination,current}
         },this.getList)//改变数据执行回调方法
     }
     create=()=>{ // 添加文件
@@ -91,7 +91,7 @@ export default class Article extends Component{
                 this.setState(
                     {},this.getList
                 )
-            } 
+            }
         })
     }
     //搜索
@@ -114,12 +114,11 @@ export default class Article extends Component{
         let comment = this.commentForm.props.form.getFieldsValue();//{comment:xxxx};
         articlesServer.addComment(this.state.item._id,comment).then(res=>{
             if(res.code){
-                this.setState({commentvisible:false},this.getList);
+                this.setState({ commentVisible: false},this.getList);
             }else{
                 message.error(res.data);
             }
         })
-        // this.setState({commentVisible:false})
     }
     //删除评论
     deleteComment=(article_id,commrnt_id)=>{
@@ -148,9 +147,9 @@ export default class Article extends Component{
                     if(text){
                         var str = text.name.substr(0,8);
                         if(text.length>8){
-                           str+="......"      
+                           str+="......"
                         }
-                        return str || '无'    
+                        return str || '无'
                     // return text.name // text本来是一个字符串，populate之后text就是一个分类对象
                     }
                 }
@@ -163,7 +162,7 @@ export default class Article extends Component{
                     if(text){
                         var str = text.substr(0,10);
                         if(text.length>10){
-                           str+="......"      
+                           str+="......"
                         }
                         return str;
                     }
@@ -217,7 +216,7 @@ export default class Article extends Component{
                     )
                 }
             },
-            
+
         ]
         let rowSelection = {
             onChange:(selectedRowKeys)=>{
@@ -235,7 +234,7 @@ export default class Article extends Component{
                                         type="dashed"
                                         icon="plus-circle"
                                         onClick={this.create}>添加文章
-                                    </Button>                                    
+                                    </Button>
                                     <Button
                                         style={{marginLeft:'8px'}}
                                         type="danger"
@@ -271,7 +270,7 @@ export default class Article extends Component{
                     destroyOnClose
                     >
                     <WrappedEditModal
-                        wrappedComponentRef={inst=>this.editform = inst} 
+                        wrappedComponentRef={inst=>this.editform = inst}
                         isCreate={this.state.isCreate}
                         item={this.state.item}
                         categories={this.state.categories}
@@ -298,7 +297,7 @@ export default class Article extends Component{
                     destroyOnClose
                     >
                     <WrappedCommentModal
-                        wrappedComponentRef={inst=>this.commentForm = inst} 
+                        wrappedComponentRef={inst=>this.commentForm = inst}
                         isCreate={this.state.isCreate}
                         item={this.state.item}
                         deleteComment={this.deleteComment}
@@ -306,7 +305,7 @@ export default class Article extends Component{
                 </Modal>
             </div>
         )
-    }   
+    }
 }
 
 class EditModal extends Component {
@@ -329,7 +328,7 @@ class EditModal extends Component {
                                 // [<Select.Option key="1">1</Select.Option>,<Select.Option key="2">2</Select.Option>]
                                }
                            </Select>
-                       ) 
+                       )
                     }
                 </Form.Item>
                 <Form.Item>
@@ -339,7 +338,7 @@ class EditModal extends Component {
                            rules:[{required:true,message:'请输入标题'}]
                        })(
                            <Input placeholder="请输入标题" />
-                       ) 
+                       )
                     }
                 </Form.Item>
                 <Form.Item>
@@ -349,7 +348,7 @@ class EditModal extends Component {
                            rules:[{required:true,message:'请输入内容'}]
                        })(
                            <TextArea placeholder="请输入内容" autosize={{ minRows: 2, maxRows: 8 }} />
-                       ) 
+                       )
                     }
                 </Form.Item>
                 {
@@ -359,7 +358,7 @@ class EditModal extends Component {
                            initialValue:this.props.item._id,
                         })(
                             <Input type="hidden" />
-                        ) 
+                        )
                     }
                     </Form.Item>
                 }
@@ -390,22 +389,22 @@ class CommentModal extends Component{
         setTimeout(()=>{
             this.setState({
                 start:this.state.start+this.state.limit,
-                
+
             },()=>{
                this.setState({
                    loading:false,
                    comments:this.props.item.comments.slice(0,this.state.start+this.state.limit)
-               })     
+               })
             })
         },2000)
     }
     render(){
         const {getFieldDecorator} = this.props.form;
         const loadMore =(
-            this.state.start + this.state.limit<this.props.item.comments.length && 
+            this.state.start + this.state.limit<this.props.item.comments.length &&
             <div style={{marginTop:20,textAlign:'center'}}>
                 {this.state.loading?<Spin />: <Button onClick={this.loadMore}>加载更多</Button>}
-            </div>    
+            </div>
         )
         return(
             <Row>
@@ -424,7 +423,7 @@ class CommentModal extends Component{
                         dataSource={this.state.comments}
                         loadMore={loadMore}
                         renderItem={item => (
-                            <List.Item actions={[<Button type="danger" icon="delete" 
+                            <List.Item actions={[<Button type="danger" icon="delete"
                                                 onClick={()=>this.props.deleteComment(this.props.item._id,item._id)}>删除</Button>]}>
                                 <List.Item.Meta
                                     avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
